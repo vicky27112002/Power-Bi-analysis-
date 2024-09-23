@@ -1,0 +1,15 @@
+PROFIT DAX MEASURES 
+profit = SUM('transaction'[sales_qty])
+Profit Margin % = DIVIDE([Total Profit Margin],[Revenue],0)
+Profit Margin Contribution % = DIVIDE([Total Profit Margin],CALCULATE([Total ProfitMargin],ALL('products'),ALL('customers'),ALL('markets')))
+Total Profit Margin = SUM('transaction'[profit_margin])
+
+REVENUE DAX MEASURES
+revenue = SUM('transaction'[sales_amount])
+Revenue Contribution % = DIVIDE([Revenue],CALCULATE([Revenue],ALL('products'),ALL('customers'),ALL('markets')))
+Revenue_LY = CALCULATE([revenue],SAMEPERIODLASTYEAR('date'[date]))
+
+PROFIT TARGETS MEASURES
+profit targers = GENERATESERIES(-0.5,0.15,0.1)
+profit target value = SELECTEDVALUE('profit targets'[Value])
+total diff value = [Profit Margin %]-'profit targets'[profit target value]
